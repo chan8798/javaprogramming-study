@@ -1,15 +1,13 @@
-package 중간프로젝트;
 import java.util.*;
 import java.math.BigInteger;
 import java.lang.NumberFormatException;
 import java.util.InputMismatchException;
 public class blackjack {
-	public static String name;
-	public String[] card;
-	public List<Object> Ar;
-	public List<Object> Arr;
+	public static String name; //사용자 이름
+	public String[] card; //배포할 카드 배열에 모음
+	public List<Object> Ar; // 사용자 카드 패
+	public List<Object> Arr;// 딜러 카드 패
     public int ss;
-    public int as;
     public Object ac;
 
     public void name() {//name 카드 패 공개
@@ -39,7 +37,6 @@ public class blackjack {
 		for(int i=0; i<=rNum.length; i++){	
 			
 			if(i<rNum.length) {
-				this.as=i;
 				this.ac=Ar.get(rNum[i]);
 			    Ars.add(ac);
 			}
@@ -70,29 +67,25 @@ public class blackjack {
 					int ch=b.nextInt();
 					if(ch==1) {
 						this.ss=ch;
-						Asc();
-						
+						Asc();//Asc 메소드로 이동
 					}
 					else if(ch==11) {
 						this.ss=ch;
-						Asc();
-						
+						Asc();//Asc 메소드로 이동
 					}
 					else {
 						System.out.println(i+1+"번째 A취할 점수 1또는 11 다시 입력");
-						i-=1;
+						i-=1;//다시 재입력 하도록 반복문 인덱스 증가 방지
 					}
-					
 				}
-					
 				}
 				catch(InputMismatchException e) {
 					System.out.println(i+1+"번째 A취할 점수 1또는 11 다시 입력");
-					i-=1;
+					i-=1;//다시 재입력 하도록 반복문 인덱스 증가 방지
 				}
-				
-			}
-	 }
+			}	
+	}		
+	 
 	public int Asc() {
 		return ss;
 	}
@@ -187,13 +180,13 @@ public class blackjack {
 		
 	}
 	
-	public void Aicard() {//딜러 카드 한장 드로우
+	public void Aicard() {//딜러 카드 한장 드로우,카드 패 한장 안보여 줌
 		int a= (int)(Math.random()*36);
 		Arr.add(card[a]);
 		System.out.println("딜러");
 		for(int i=0; i<Arr.size(); i++) {
 			if(i==0) {
-				System.out.print("?"+" ");
+				System.out.print("?"+" ");// 딜러 인덱스 0부분에 카드 패 한장 숨김(안 보여줌)
 			}
 			else {
 				System.out.print(Arr.get(i)+" ");
@@ -214,7 +207,7 @@ public class blackjack {
 		            BigInteger big=new BigInteger(money);
 			        BigInteger val=new BigInteger("0");
 			        int choice= big.compareTo(val);
-			        if(choice==-1) { //big<val 일때 재입력 시도
+			        if(choice==-1) { //big<val 일때 
 			        	System.out.println("다시 입력하시오");
 					    i-=1;
 			        }
@@ -319,58 +312,39 @@ public class blackjack {
 			Scanner sc=new Scanner(System.in);
 			String c=sc.next();
 			if(c.equals("h")) {
-				if(doubledown.size()==1) {
+				if(doubledown.size()==1) {//처음 카드 뽑을때 doubledown을 하면 hit(카드 한장 드로우)못함
 					System.out.println(name+" 님  Doubledown 하셔서 카드 못 뽑습니다.");
-					if(cc.B()>=17) {
-						pl.name();
-						pl.hiddenAi();
+					if(cc.B()>=17) {//딜러가 합이 17이상이면 카드 한장 드로우 못 함.
+						pl.name();// 사용자 카드 패제공
+						pl.hiddenAi();// 딜러 카드 패한장 보여주지 않고 보여줌
 					}	
-					else if(cc.B()<17) {
-						pl.name();
-						pl.Aicard();
+					else if(cc.B()<17) {//딜러가 합이 17미만이면 카드 한장 드로우
+						pl.name();// 사용자 카드 패제공
+						pl.Aicard();//딜러 카드 한장 드로우 하고 카드 패한장 보여주지 않고 보여줌
 			
 					}
 				 }	
 				
-			    else {
+			    else {// 처음 카드 뽑을 때 doubledown을 하지 않으면 hit 할 수 있음
 					hit.add("hit");
-					if(cc.B()>=17) {
-						pl.namecard();
-						pl.hiddenAi();
+					if(cc.B()>=17) {//딜러가 합이 17이상이면 카드 한장 드로우 못 함.
+						pl.namecard();//사용자 드로우 한 카드를 보여줌
+						pl.hiddenAi();// 딜러 카드 패한장 보여주지 않고 보여줌
 						
 					}
-					else if(cc.B()<17) {
-						pl.namecard();
-						pl.Aicard();
+					else if(cc.B()<17) {//딜러가 합이 17미만이면 카드 한장 드로우
+						pl.namecard();//사용자 드로우 한 카드를 보여줌
+						pl.Aicard();//딜러 카드 한장 드로우 하고 카드 패한장 보여주지 않고 보여줌
 			
 					}
 			}
 		}	
 			else if(c.equals("d")) {
-				if(hit.size()>=1) {
+				if(hit.size()>=1) {//처음에 hit를 하면 doubledown못함
 					System.out.println(name+" 님  첫 턴에 hit 하셔서 doubledown못 합니다.");
-					if(cc.B()>=17) {
-						pl.name();
-						pl.hiddenAi();
-					}	
-					else if(cc.B()<17) {
-						pl.name();
-						pl.Aicard();
-						}
-					}
-				
-				else if(doubledown.size()==1) {
-					pl.nameAcsore();
-					System.out.println(name+" 님  Doubledown 하셔서 카드 못 뽑습니다.");
-					if(cc.B()>=17) {
-						pl.name();
-						pl.hiddenAi();
-					}	
-					else if(cc.B()<17) {
-						pl.name();
-						pl.Aicard();
-						
-					}
+				}
+				else if(doubledown.size()==1) {//첫 번째 doubledown하면 다시 doubledown못함
+					System.out.println(name+" 님  첫 턴에 doubledown 하셔서 doubledown못 합니다.");
 				}
 				else {
 					doubledown.add("doubledown");
@@ -381,17 +355,25 @@ public class blackjack {
 				    System.out.println("딜러도 추가 배팅 금액은"+big+"입니다.");
 				    System.out.println("딜러도 총 배팅 금액>>"+big3);
 				    big=big.multiply(big2);
-				    pl.namecard();
-				    pl.Aicard();
+				    if(cc.B()>=17) {//딜러가 합이 17이상이면 카드 한장 드로우 못 함.
+						pl.namecard();//사용자 드로우 한 카드를 보여줌
+						pl.hiddenAi();// 딜러 카드 패한장 보여주지 않고 보여줌
+						
+					}
+					else if(cc.B()<17) {//딜러가 합이 17미만이면 카드 한장 드로우
+						pl.namecard();//사용자 드로우 한 카드를 보여줌
+						pl.Aicard();//딜러 카드 한장 드로우 하고 카드 패한장 보여주지 않고 보여줌
+			
+					}
 				}
 			
 			}
 		    else if(c.equals("s")) {
-		    	pl.nameAcsore();
-		        int ch=pl.Asc();
-		        cc.ch=ch;	
+		    	pl.nameAcsore();//사용자 카드 패에 A가 존재 할 경우 1또는 11 숫자를 선택
+		        int ch=pl.Asc();//선택된 숫자 반환된값을 ch에 넣어 줌
+		        cc.ch=ch;	//ch는 score의 ch형에 넣어줌
 		        	
-            	if(cc.n()>21) {
+            	if(cc.n()>21) {//사용자 카드 패 합이 21이면 버스트
             		BigInteger big2=new BigInteger("2");
                 	BigInteger big3=big.multiply(big2);
 					System.out.println(name+" 님 버스트 입니다.");
@@ -405,9 +387,9 @@ public class blackjack {
 					pl.Ai();
 					System.out.println("딜러의 짐수는"+cc.B()+"입니다.");
 					System.out.println(name+"의 점수는"+cc.n()+"입니다.");
-					break;
+					break;//게임 종류 while 문은 벗어남
 				 }
-				 else if(cc.n()==21) {
+				 else if(cc.n()==21) {//사용자 카드 패 합이 딜러 보다 먼저 21이면 승리
 					BigInteger big2=new BigInteger("2");
 			        BigInteger big3=big.multiply(big2);
 					System.out.println(name+" 님 합이21 승리 입니다.");
@@ -423,7 +405,7 @@ public class blackjack {
 					System.out.println(name+"의 점수는"+cc.n()+"입니다.");
 					break;
 				}
-				 else if(cc.n()==cc.B()) {
+				 else if(cc.n()==cc.B()) {// 카드 패 합이 똑같으면 무승부
 					System.out.println("무승부 입니다.");
 					System.out.println("=========================");
 					System.out.println(name+"손실금액"+0);
@@ -438,7 +420,7 @@ public class blackjack {
 					break;
 				}
 			
-			   else if(cc.n()<cc.B()) {
+			   else if(cc.n()<cc.B()) {//딜러의 카드 패 합이 사용자 카드 패 합 보다 크면 name 패배, 딜러 승리
 				        BigInteger big2=new BigInteger("2");
 		        	    BigInteger big3=big.multiply(big2);
 						System.out.println(name+" < 딜러 이므로 "+name+" 님 패배 입니다.");
@@ -456,7 +438,7 @@ public class blackjack {
 						System.out.println(name+"의 점수는"+cc.n()+"입니다.");
 						break;
 					}
-					else if(cc.n()>cc.B()) {
+					else if(cc.n()>cc.B()) {//사용자의 카드 패 합이 딜러 카드 패 합보다 크면 사용자 승리 딜러 패배
 						BigInteger big2=new BigInteger("2");
 			        	BigInteger big3=big.multiply(big2);
 						pl.name();
@@ -476,7 +458,7 @@ public class blackjack {
 						
 					}
             }
-		    else if(c.equals("sf")) {
+		    else if(c.equals("sf")) {//사용자 카드 패 셔플(카드 패를 섞고, 섞은 카드 패를 보여준다.
 		    	pl.nameshuffle();
 		    	pl.hiddenAi();				
 				
